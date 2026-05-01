@@ -1,0 +1,11 @@
+{
+    "Lua.diagnostics.globals": [
+        "love",
+        "getPos",
+        "getRect",
+        "playerIsGrounded",
+        "isGrounded",
+        "collisionType",
+        "updateMovement"
+    ]
+}
