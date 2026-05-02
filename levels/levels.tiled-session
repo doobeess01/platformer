@@ -1,0 +1,50 @@
+{
+    "activeFile": "level2.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "file.lastUsedOpenFilter": "Tiled tileset files (*.tsx *.xml)",
+    "fileStates": {
+        "/home/davidmdee01/platformer tileset.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 4,
+            "scaleInEditor": 8
+        },
+        "level1.tmx": {
+            "scale": 4.0671875,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 64.04917402996541,
+                "y": 63.92623895505186
+            }
+        },
+        "level2.tmx": {
+            "scale": 4.0671875,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 42.65847099500576,
+                "y": 63.92623895505186
+            }
+        }
+    },
+    "last.exportedFilePath": "/home/davidmdee01/prog/love/platformer/levels",
+    "map.fixedSize": true,
+    "map.height": 16,
+    "map.lastUsedExportFilter": "Lua files (*.lua)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 8,
+    "map.tileWidth": 8,
+    "map.width": 16,
+    "openFiles": [
+        "/home/davidmdee01/platformer tileset.tsx",
+        "level1.tmx",
+        "level2.tmx"
+    ],
+    "project": "levels.tiled-project",
+    "property.type": "Collider",
+    "recentFiles": [
+        "/home/davidmdee01/platformer tileset.tsx",
+        "level1.tmx",
+        "level2.tmx"
+    ]
+}

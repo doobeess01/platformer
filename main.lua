@@ -1,6 +1,5 @@
---[[ Low resolution ]]--
-
-local push = require "libraries/push"
+local push = require "libraries.push"
+local inspect = require "libraries.inspect"
 
 local level = require "level"
 
@@ -28,18 +27,13 @@ function love.load()
 	local font = love.graphics.newFont("assets/press_start_2p/PressStart2P.ttf", 8)
 	love.graphics.setFont(font)
 
-	World, Items = level:load(1)
+	Map, World, Items = level:load(1)
 
   	N_platforms = 2
 
  	LevelNumber = 1
 
 	Score = 0
-	Sprites = {
-		Coin=love.graphics.newImage('assets/coin.png'),
-		Goal=love.graphics.newImage('assets/goal flag.png'),
-		Platform=love.graphics.newImage('assets/platform.png')
-	}
 
 
 	GRAVITY = 400
@@ -58,7 +52,7 @@ end
 
 
 function collisionType(item, other)
-  if other.name == Platform then
+  if other.name == "platform" then
 	return "slide"
   end
   return "cross"
@@ -74,23 +68,25 @@ function love.update(dt)
   for i = 1, len, 1 do
 	local col = cols[i]
 	local item = col.other
-	if item.name == Platform 
+	if item.name == "platform"
 	and col.normal.y == 1 then -- Collided from below
 	  Player.vy = -Player.vy/4
-	elseif item.name == Coin then
-	  item.delete = true
-	  Score = Score + 1
-	elseif item.name == Goal then
+	elseif item.name == "coin" then
+		item.delete = true
+		Score = Score + 1
+	elseif item.name == "goal" then
 		LevelNumber = LevelNumber + 1
-		World, Items = level:load(LevelNumber)
+		Map, World, Items = level:load(LevelNumber)
 	end
   end
 
   local newItems = {}
 
   for i = 1, #Items, 1 do
-	if Items[i].delete then
-	  World:remove(Items[i])
+	local item = Items[i]
+	if item.delete then
+	  World:remove(item)
+	  Map:setLayerTile("all", item.x, item.y, 0)
 	else
 	  table.insert(newItems, Items[i])
 	end
@@ -101,24 +97,14 @@ end
 
 
 function love.draw()
-  push:apply('start')
+  	push:apply('start')
 
-  love.graphics.clear(.4,.65,1)
-  love.graphics.print('Score: '..Score,1,1)
-  local playerPos = getRect(Player)
-  love.graphics.draw(Player.sprite, playerPos.x+4, playerPos.y, 0, Player.facing, 1, 4,0)
+	love.graphics.clear(.4,.65,1)
+ 	love.graphics.print('Score: '..Score,1,1)
+	local playerPos = getRect(Player)
+  	love.graphics.draw(Player.sprite, playerPos.x+4, playerPos.y, 0, Player.facing, 1, 4,0)
 
+	Map:draw()
 
-  for i = 1, #Items, 1 do
-	local item = Items[i]
-
-	local itemPos = getRect(Items[i])
-	if Sprites[item.name] then
-	  love.graphics.draw(Sprites[item.name], itemPos.x, itemPos.y)
-	else
-	  love.graphics.rectangle('fill',itemPos.x,itemPos.y,itemPos.w,itemPos.h)
-	end
-  end
-
-  push:apply('end')
+  	push:apply('end')
 end

@@ -11,7 +11,7 @@ function isGrounded(item)
   local itemPos = getRect(item)
   local actualX, actualY, cols, len = World:check(item, itemPos.x, itemPos.y+0.01)
   for i = 1, len, 1 do
-    if cols[i].other.name == Platform then
+    if cols[i].other.name == "platform" then
       return true
     end
   end

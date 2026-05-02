@@ -1,57 +1,42 @@
-local bump = require "libraries/bump"
+local bump = require "libraries.bump"
+local sti = require "libraries.sti"
+local inspect = require "libraries.inspect".inspect
 
 
 local level = {}
 
 
-local levels = require "levels"
-
-
-local hitboxes = {
-	Platform={x=0,y=0,w=8,h=6},
-	Coin={x=1,y=1,w=6,h=6},
-	Goal={x=1,y=1,w=6,h=7},
-	Player={x=0,y=0,w=8,h=8},
-}
-
-
-
 function level:load(levelnum)
-	local map = levels[levelnum]
-
+	local map = sti("levels/level"..levelnum..'.lua')
+	
 	local items = {}
+
 	local world = bump.newWorld()
-	local itemCounts = {
-		Platform=0,
-		Coin=0,
-		Goal=0,
-	}
-
-	local mapWidth = #map[1]
-	local mapHeight = #map
-
-	for i = 1, mapHeight, 1 do
-		for j = 1, mapWidth, 1 do
-			local tile = map[i][j]
-			if tile then
-				local item
-				local hitbox
-				if tile == PlayerStart then
-					Player = require "player"
-					item = Player
-					hitbox = hitboxes.Player
-				else
-					itemCounts[tile] = itemCounts[tile] + 1
-					item = {name=tile, id=itemCounts[tile]}
-					table.insert(items, item)
-					hitbox = hitboxes[tile]
-				end
-				world:add(item, (j-1)*8+hitbox.x, (i-1)*8+hitbox.y, hitbox.w,hitbox.h)
+	local player_pos
+	for tile_y, row in ipairs(map.layers["all"].data) do
+		for tile_x, tile in pairs(row) do
+			local prop = tile.properties
+			if prop.collider then
+				local uid = #items+1
+				local item = {
+					x=tile_x,
+					y=tile_y,
+					name=prop.name,
+					uid=uid,
+				}
+				table.insert(items, item)
+				world:add(item, (tile_x-1)*map.tilewidth+prop.collider.x, (tile_y-1)*map.tileheight+prop.collider.y, prop.collider.w, prop.collider.h)
+			elseif prop.name == "player" then
+				Player = require "player"
+				world:add(Player, (tile_x-1)*map.tilewidth, (tile_y-1)*map.tileheight, 8, 8)
+				player_pos = {x=tile_x, y=tile_y}
 			end
 		end
 	end
+	map:setLayerTile("all", player_pos.x, player_pos.y, 0)
 
-	return world, items
+	return map, world, items
+
 end
 
 

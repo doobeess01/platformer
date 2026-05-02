@@ -1,0 +1,46 @@
+{
+    "automappingRulesFile": "",
+    "commands": [
+    ],
+    "compatibilityVersion": 1100,
+    "extensionsPath": "extensions",
+    "folders": [
+        "."
+    ],
+    "properties": [
+    ],
+    "propertyTypes": [
+        {
+            "color": "#ffa0a0a4",
+            "drawFill": true,
+            "id": 1,
+            "members": [
+                {
+                    "name": "h",
+                    "type": "int",
+                    "value": 8
+                },
+                {
+                    "name": "w",
+                    "type": "int",
+                    "value": 8
+                },
+                {
+                    "name": "x",
+                    "type": "int",
+                    "value": 0
+                },
+                {
+                    "name": "y",
+                    "type": "int",
+                    "value": 0
+                }
+            ],
+            "name": "Collider",
+            "type": "class",
+            "useAs": [
+                "property"
+            ]
+        }
+    ]
+}
